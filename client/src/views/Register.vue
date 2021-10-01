@@ -45,6 +45,8 @@
         
         <button class="w-100 btn btn-lg btn-primary" type="button" @click="register">Sign up</button>
 
+        <div v-for="(alert, i) in responseAlerts" :key="i" class="alert alert-danger">{{alert.msg}}</div>
+
       </div>
     </div>
   </div>
@@ -54,6 +56,7 @@
 
 import Terms from '../components/Terms'
 import PasswordHelp from '../components/PasswordHelp'
+//import axios from 'axios'
 
 export default {
   name: 'Register',
@@ -63,12 +66,13 @@ export default {
   },
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      acceptsConditions: false,
+      firstName: 'Joe',
+      lastName: 'Platts',
+      email: 'japlatts@gmail.com',
+      password: '1Double2@',
+      confirmPassword: '1Double2@',
+      acceptsConditions: true,
+      responseAlerts: []
     }
   },
   computed: {
@@ -110,12 +114,27 @@ export default {
     }
   },
   methods: {
-    register() {
+    async register() {
+      this.responseAlerts = [];
       if(this.firstNameValid && this.lastNameValid && this.emailValid && this.confirmationValid && this.acceptsConditions) {
-        console.log('lettuce register.')
-        console.log(this)
-      } else {
-        console.log('no dice.')
+        let response = await fetch('/api/users/register', { 
+          method: 'POST',  
+          body: JSON.stringify({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            password: this.password
+          }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        let d = await response.json();
+        if (response.status !== 200) {
+          this.responseAlerts.push(d)
+        } else {
+          console.log(response);
+          console.log(d);
+          this.$router.push('/validate/abcv')
+        }
       }
     },
     isEmail(email) {

@@ -7,9 +7,13 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <p> Password requirements:
+        <p>Password must haves:
           <ul>
-            <li>Len</li>
+            <li>At least 8 characters</li>
+            <li>At least 1 upper case letter</li>
+            <li>At least 1 lower case letter</li>
+            <li>At least 1 number</li>
+            <li>At least 1 special character (!@#$%^&*)</li>
           </ul>
         </p>
       </div>
@@ -29,6 +33,9 @@ export default {
 }
 </script>
 <style scoped>
+p {
+  text-align: left;
+}
 span {
   color: black;
 }
