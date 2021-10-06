@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Hello Validate:  {{$route.params.id}}  {{id}}</h1>  
+    <h1>Hello Confirm:  {{$route.params.id}}  {{id}}</h1>  
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 //import axios from 'axios'
 
 export default {
-  name: 'Validate',
+  name: 'Confirm',
   components: {
     
   },

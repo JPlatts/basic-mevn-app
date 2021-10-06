@@ -1,5 +1,5 @@
 //import configuration
-const { PORT, mongoUri } = require('./config');
+const { mongoUri } = require('./config');
 
 //Import the mongoose module
 var mongoose = require('mongoose');

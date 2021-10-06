@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
-const { PORT, mongoUri } = require('./modules/config');
+const { PORT } = require('./modules/config');
 const cors = require('cors');
 const morgan = require('morgan');
 

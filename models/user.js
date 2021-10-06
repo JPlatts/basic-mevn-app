@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const hasher = require('../modules/hasher');
+const mailer = require('../modules/mailer');
+
 
 const userSchema = mongoose.Schema({
     email: { 
@@ -66,7 +68,8 @@ userSchema.statics.sanitizeNewUser = (user) => {
   user.email = user.email ? user.email.trim() : '';
   user.firstName = user.firstName ? user.firstName.trim() : '';
   user.lastName = user.lastName ? user.lastName.trim() : '';
-  user.password = user.password ? user.password.trim() :'';
+  user.password = user.password ? user.password.trim() : '';
+  user.confirmationRoute = user.confirmationRoute ? user.confirmationRoute.trim() : '';
 
   return user;
 }
@@ -83,12 +86,16 @@ userSchema.statics.createAndSave = async (inputUser) => {
   newUser.passwordSetDate = new Date();
   
   let confKey = hasher.genResetkey();
-  // TODO: email confirmation key
   let confHash = hasher.hashPwd(confKey);
   newUser.confirmationSalt = confHash.salt;
   newUser.confirmationHash = confHash.hash;
+  newUser = await newUser.save();
+
+  let confirmationLink = `${inputUser.confirmationRoute}/${newUser.id}.${confKey}`;
+  mailer.registrationMail(newUser,confirmationLink);
+  return newUser;
   
-  return await newUser.save();
+
 }
 
 userSchema.statics.desensitize = async (user) => {
@@ -120,6 +127,10 @@ userSchema.statics.validateNewUser = (user) => {
   let pwRegex = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
 
   if (!saniUser.password || !pwRegex.test(saniUser.password)) {
+    valid = false;
+  }
+
+  if (!saniUser.confirmationRoute || saniUser.confirmationRoute == '') {
     valid = false;
   }
 

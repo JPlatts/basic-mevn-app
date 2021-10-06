@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home'
 import About from '../views/About'
 import Register from '../views/Register'
-import Validate from '../views/Validate'
+import Confirm from '../views/Confirm'
 
 const routes = [
   {
@@ -21,9 +21,9 @@ const routes = [
     component: Register,
   },
   {
-    path: '/validate/:id',
-    name: 'Validate',
-    component: Validate,
+    path: '/confirm/:id',
+    name: 'Confirm',
+    component: Confirm,
     props: true
   },
 ]

@@ -56,7 +56,7 @@
 
 import Terms from '../components/Terms'
 import PasswordHelp from '../components/PasswordHelp'
-//import axios from 'axios'
+
 
 export default {
   name: 'Register',
@@ -123,7 +123,8 @@ export default {
             firstName: this.firstName,
             lastName: this.lastName,
             email: this.email,
-            password: this.password
+            password: this.password,
+            confirmationRoute: `${window.location.origin}/confirm`
           }),
           headers: { 'Content-Type': 'application/json' }
         });
