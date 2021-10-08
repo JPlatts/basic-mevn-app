@@ -90,9 +90,14 @@ userSchema.statics.createAndSave = async (inputUser) => {
   newUser.confirmationSalt = confHash.salt;
   newUser.confirmationHash = confHash.hash;
   newUser = await newUser.save();
-
-  let confirmationLink = `${inputUser.confirmationRoute}/${newUser.id}.${confKey}`;
-  mailer.registrationMail(newUser,confirmationLink);
+  try {
+    let confirmationLink = `${inputUser.confirmationRoute}/${newUser.id}/key/${confKey}`;
+    let mailInfo = await mailer.registrationMail(newUser,confirmationLink);
+  } catch(ex) {
+    // registration mail failed delete new user
+    let del = await User.deleteOne(newUser);
+    throw ex;
+  }
   return newUser;
   
 
@@ -105,6 +110,31 @@ userSchema.statics.desensitize = async (user) => {
   delete retVal.pwdHash;
   delete retVal.pwdSalt;
   return retVal;
+}
+
+userSchema.statics.confirm = async (userID, key) => {
+  try {
+    let user = await User.findById(userID)
+    if(user && user.confirmationDate) {
+      return await User.desensitize(user);
+    } else if(user && hasher.hash(user.confirmationSalt, key) === user.confirmationHash) {
+      user.confirmationDate = new Date();
+      let s = await user.save();
+      console.log('ELKFKLJLKSDLKfj');
+      console.log(s);
+      console.log('MOOOOOOOOSEE!')
+      return await User.desensitize(user);
+    }
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+  
+}
+
+userSchema.statics.isConfirmed = async (userID) => {
+  let user = await User.findById(userID).lean();
+  return user.confirmationDate !== undefined && user.confirmationDate !== null;
 }
 
 userSchema.statics.validateNewUser = (user) => {

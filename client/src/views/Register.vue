@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="row justify-content-md-center">
-      <div class="col-md-6">
+      <div v-if="user" class="col-md-6">
+        <registration-confirmation :user="user"/>
+      </div>
+      <div v-if="!user" class="col-md-6">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
         <div class="form-floating">
           <input v-model="firstName" type="text" class="form-control"
@@ -54,15 +57,18 @@
 
 <script>
 
-import Terms from '../components/Terms'
-import PasswordHelp from '../components/PasswordHelp'
+import Terms from '../components/Terms';
+import PasswordHelp from '../components/PasswordHelp';
+import RegistrationConfirmation from '../components/RegistrationConfirmation';
+import cf from '../modules/common-functions'
 
 
 export default {
   name: 'Register',
   components: {
     Terms,
-    PasswordHelp
+    PasswordHelp, 
+    RegistrationConfirmation
   },
   data() {
     return {
@@ -72,7 +78,8 @@ export default {
       password: '1Double2@',
       confirmPassword: '1Double2@',
       acceptsConditions: true,
-      responseAlerts: []
+      responseAlerts: [], 
+      user: null,
     }
   },
   computed: {
@@ -83,7 +90,7 @@ export default {
       return !this.lastName.trim() == '';
     },
     emailValid() {
-      return (this.email.trim() !== '' && this.isEmail(this.email));
+      return (this.email.trim() !== '' && cf.isEmail(this.email));
     },
     emailValidationText() {
       if (this.email.trim() == '') {
@@ -93,7 +100,7 @@ export default {
       }
     },
     passwordValid() {
-      return (this.password.trim() !== '' && this.isMedStrongPwd(this.password.trim()));
+      return (this.password.trim() !== '' && cf.isMedStrongPwd(this.password.trim()));
     },
     passwordValidationText() {
       if (this.password.trim() == '') {
@@ -132,21 +139,11 @@ export default {
         if (response.status !== 200) {
           this.responseAlerts.push(d)
         } else {
-          console.log(response);
-          console.log(d);
-          this.$router.push('/validate/abcv')
+          this.user = d.user;
         }
       }
-    },
-    isEmail(email) {
-      let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    },
-    isMedStrongPwd(pwd) {
-      let re = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
-      return re.test(pwd);
     }
-  },
+  }
 };
 </script>
 <style scoped>

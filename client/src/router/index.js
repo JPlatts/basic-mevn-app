@@ -3,6 +3,7 @@ import Home from '../views/Home'
 import About from '../views/About'
 import Register from '../views/Register'
 import Confirm from '../views/Confirm'
+import LogIn from '../views/LogIn'
 
 const routes = [
   {
@@ -21,10 +22,15 @@ const routes = [
     component: Register,
   },
   {
-    path: '/confirm/:id',
+    path: '/confirm/:id/key/:confkey?',
     name: 'Confirm',
     component: Confirm,
     props: true
+  },
+  {
+    path: '/login',
+    name: 'LogIn',
+    component: LogIn,
   },
 ]
 

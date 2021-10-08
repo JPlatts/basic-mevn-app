@@ -28,7 +28,7 @@
         -->
       </ul>
       <div class="d-flex">
-        <router-link class="btn btn-outline-success" to="/register" >Sign up</router-link>
+        <router-link class="btn btn-outline-success" to="/login" >Log In</router-link>
       </div>
     </div>
   </div>

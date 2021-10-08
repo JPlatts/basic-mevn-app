@@ -32,7 +32,7 @@ function mailer() {
   //   });
   // }
 
-  this.registrationMail = (user, link) => {
+  this.registrationMail = async (user, link) => {
     let transport = initTransport();
     const message = {
         from: 'registration@plattswork.com', // Sender address
@@ -40,11 +40,8 @@ function mailer() {
         subject: 'PlattsWork.com Registration', // Subject line
         html: `<p>Thank you for registering with PlattsWork.com</p><p>Please follow this link to confirm your account registration:</p><p><a href="${link}">Confirm Account</a></p>` // Plain text body
     };
-    transport.sendMail(message, function(err, info) {
-        if (err) {
-          console.log(err)
-        }
-    });
+    return  await transport.sendMail(message);
+    
   }
     
 }
