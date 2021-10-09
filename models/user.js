@@ -132,6 +132,15 @@ userSchema.statics.confirm = async (userID, key) => {
   
 }
 
+userSchema.statics.authenticate = async (email, password) => {
+  let user = await User.findOne({email: email});
+  if (user && hasher.hash(user.pwdSalt, password) === user.pwdHash) {
+    return await User.desensitize(user);
+  } else {
+    return null;
+  }
+}
+
 userSchema.statics.isConfirmed = async (userID) => {
   let user = await User.findById(userID).lean();
   return user.confirmationDate !== undefined && user.confirmationDate !== null;

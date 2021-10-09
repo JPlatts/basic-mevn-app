@@ -1,7 +1,8 @@
 const express = require('express');
 const User = require('../models/user');
 const router = express.Router();
-
+const jwt = require('jsonwebtoken');
+const {JWT_KEY} = require('../modules/config');
 
 router.post('/register', async (req, res) => {
   try {
@@ -56,6 +57,23 @@ router.get('/confirm/:id.:key', async (req, res) => {
     console.log(err);
     res.status(400).json({ msg:'Invalid Request.', err: err });
   }
+});
+
+router.post('/authenticate', async (req, res) => {
+  try {
+    let user = await User.authenticate(req.body.email, req.body.password);
+    if(user && user.confirmationDate) {
+      const accessToken = jwt.sign({ user: user }, JWT_KEY);
+      res.status(200).json({user: user, token: accessToken, msg:'success' });
+    } else if(user && !user.confirmationDate) {
+      res.status(201).json({user: user, msg:'Account has not been confirmed.'});
+    } else {
+      res.status(201).json({ msg:'Authentication Failed' });
+    }
+  } catch (err) {
+    res.status(400).json({ msg:'Invalid Request' });
+  }
+  
 });
 
 
