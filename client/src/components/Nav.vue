@@ -10,40 +10,28 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/about">About</router-link>
         </li>
-        <!--
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
-        -->
       </ul>
       <div class="d-flex">
-        <router-link class="btn btn-outline-success" to="/login" >Log In</router-link>
+        <router-link v-if="!isAuthenticated" class="btn btn-outline-success" to="/login" >Log In</router-link>
+        <button v-if="isAuthenticated" type="button" class="btn btn-secondary" @click="logOut" >Log Out</button>
       </div>
     </div>
   </div>
 </nav>
 </template>
 <script>
-import { Modal } from 'bootstrap'
+import { Modal } from 'bootstrap';
+import {mapGetters, mapActions} from 'vuex';
 export default {
-    name: 'Nav',
-    methods: {
-        showModal() {
-            let m = new Modal(this.$refs.exampleModal);
-            m.show();
-        }
+  name: 'Nav',
+  methods: {
+    ...mapActions(['logOut']),
+    showModal() {
+      let m = new Modal(this.$refs.exampleModal);
+      m.show();
+    }
 
-    },
+  },
+  computed: mapGetters(['isAuthenticated']),
 }
 </script>

@@ -9,7 +9,6 @@ const { PORT } = require('./modules/config');
 const cors = require('cors');
 const morgan = require('morgan');
 
-
 app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())

@@ -92,7 +92,11 @@ userSchema.statics.createAndSave = async (inputUser) => {
   newUser = await newUser.save();
   try {
     let confirmationLink = `${inputUser.confirmationRoute}/${newUser.id}/key/${confKey}`;
-    let mailInfo = await mailer.registrationMail(newUser,confirmationLink);
+    let mailSuccess = await mailer.registrationMail(newUser,confirmationLink);
+    if(!mailSuccess) {
+      let del = await User.deleteOne(newUser);
+      throw new Error('Failed to send registration email.')  
+    }
   } catch(ex) {
     // registration mail failed delete new user
     let del = await User.deleteOne(newUser);
@@ -120,9 +124,6 @@ userSchema.statics.confirm = async (userID, key) => {
     } else if(user && hasher.hash(user.confirmationSalt, key) === user.confirmationHash) {
       user.confirmationDate = new Date();
       let s = await user.save();
-      console.log('ELKFKLJLKSDLKfj');
-      console.log(s);
-      console.log('MOOOOOOOOSEE!')
       return await User.desensitize(user);
     }
   } catch (err) {

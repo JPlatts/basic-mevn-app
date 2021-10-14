@@ -1,10 +1,8 @@
 <template>
   <div class="container">
+    <registration-confirmation />
     <div class="row justify-content-md-center">
-      <div v-if="user" class="col-md-6">
-        <registration-confirmation :user="user"/>
-      </div>
-      <div v-if="!user" class="col-md-6">
+      <div v-if="!authUser" class="col-md-6">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
         <div class="form-floating">
           <input v-model="firstName" type="text" class="form-control"
@@ -46,9 +44,9 @@
           <label for="chkTerms"> I accept the</label> <Terms /> 
         </div>
         
-        <button class="w-100 btn btn-lg btn-primary" type="button" @click="register">Sign up</button>
+        <button class="w-100 btn btn-lg btn-primary" type="button" @click="submitRegistration">Sign up</button>
 
-        <div v-for="(alert, i) in responseAlerts" :key="i" class="alert alert-danger">{{alert.msg}}</div>
+        <div v-for="(alert, i) in getRegistrationErrorMessages" :key="i" class="alert alert-danger">{{alert.msg}}</div>
 
       </div>
     </div>
@@ -61,7 +59,7 @@ import Terms from '../components/Terms';
 import PasswordHelp from '../components/PasswordHelp';
 import RegistrationConfirmation from '../components/RegistrationConfirmation';
 import cf from '../modules/common-functions'
-
+import {mapGetters, mapActions} from 'vuex';
 
 export default {
   name: 'Register',
@@ -78,11 +76,10 @@ export default {
       password: '1Double2@',
       confirmPassword: '1Double2@',
       acceptsConditions: true,
-      responseAlerts: [], 
-      user: null,
     }
   },
   computed: {
+    ...mapGetters(['authUser', 'getRegistrationErrorMessages', 'isAuthenticated']),
     firstNameValid() {
       return !this.firstName.trim() == '';
     },
@@ -120,27 +117,18 @@ export default {
       }
     }
   },
+  watch:{
+    isAuthenticated(newVal) {
+      if(newVal) {
+        this.$router.push('/');
+      }
+    }
+  },
   methods: {
-    async register() {
-      this.responseAlerts = [];
+    ...mapActions(['register']),
+    submitRegistration() {
       if(this.firstNameValid && this.lastNameValid && this.emailValid && this.confirmationValid && this.acceptsConditions) {
-        let response = await fetch('/api/users/register', { 
-          method: 'POST',  
-          body: JSON.stringify({
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.email,
-            password: this.password,
-            confirmationRoute: `${window.location.origin}/confirm`
-          }),
-          headers: { 'Content-Type': 'application/json' }
-        });
-        let d = await response.json();
-        if (response.status !== 200) {
-          this.responseAlerts.push(d)
-        } else {
-          this.user = d.user;
-        }
+        this.register(this.$data);
       }
     }
   }

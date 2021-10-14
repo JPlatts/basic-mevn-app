@@ -9,11 +9,11 @@ router.post('/register', async (req, res) => {
     if (!User.validateNewUser(req.body)) {
       res.status(400).json({ msg: 'Invalid Request.' });
     } else if(await User.userExistsWithEmail(req.body.email)) {
-      res.status(202).json({isSuccess: false, msg: 'An account already exists for this email address.'})
+      res.status(202).json({ msg: 'An account already exists for this email address.' })
     } else {
       let u = await User.createAndSave(req.body);
       if(u) {
-        res.status(200).json({isSuccess: true, msg:'Success', user: await User.desensitize(u) });
+        res.status(200).json({ msg:'Success', user: await User.desensitize(u) });
       } else {
         res.status(400).json({ msg: 'User registration failed' });
       }
@@ -62,13 +62,33 @@ router.get('/confirm/:id.:key', async (req, res) => {
 router.post('/authenticate', async (req, res) => {
   try {
     let user = await User.authenticate(req.body.email, req.body.password);
+
     if(user && user.confirmationDate) {
-      const accessToken = jwt.sign({ user: user }, JWT_KEY);
+      const accessToken = jwt.sign({ user: user, created: new Date()}, JWT_KEY);
       res.status(200).json({user: user, token: accessToken, msg:'success' });
     } else if(user && !user.confirmationDate) {
       res.status(201).json({user: user, msg:'Account has not been confirmed.'});
     } else {
-      res.status(201).json({ msg:'Authentication Failed' });
+      res.status(202).json({ msg:'Authentication Failed' });
+    }
+  } catch (err) {
+    res.status(400).json({ msg:'Invalid Request' });
+  }
+  
+});
+
+router.post('/reauthenticate', async (req, res) => {
+  try {
+
+    let unpacked = jwt.verify(req.body.token, JWT_KEY);
+    let user = await User.findById(unpacked.user._id);
+    if(!user) {
+      console.log('reauth user not found')
+    }
+    if(unpacked && unpacked.user && user && unpacked.user.confirmationDate) {
+      res.status(200).json({user: unpacked.user, token: req.body.token, msg:'success' });
+    } else {
+      res.status(202).json({ msg:'Authentication Failed' });
     }
   } catch (err) {
     res.status(400).json({ msg:'Invalid Request' });
