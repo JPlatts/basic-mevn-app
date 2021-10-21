@@ -31,10 +31,9 @@ const actions = {
     });
     let data = await response.json();
     if (response.status === 200) {
-      console.log(data);
       commit('authenticationSuccess', data);
     } else {
-      commit('authenticationFailure', data);
+      commit('authenticationFailure', {msg:data.msg, statusCode:response.status });
     }
   },
 
@@ -87,12 +86,17 @@ const actions = {
     });
     let data = await response.json();
     if (response.status !== 200) {
-      commit('registrationFailure', data);
+      commit('registrationFailure', {msg:data.msg, statusCode:response.status });
     } else {
       commit('registrationSuccess', data);
     }     
+  },
+  async requestConfirmation({commit}, user) {
+    
   }
 };
+
+
 
 const mutations = {
   
@@ -108,7 +112,7 @@ const mutations = {
     state.jwt = '';
     localStorage.setItem('auth_token', '');
     state.authFailureMessages = [];
-    state.authFailureMessages.push({msg:data.msg});
+    state.authFailureMessages.push(data);
   },
   
   clearAthentication: (state) => {
@@ -129,7 +133,7 @@ const mutations = {
 
   registrationFailure: (state, data) => {
     state.registrationErrorMessages = [];
-    state.registrationErrorMessages.push({msg:data.msg});
+    state.registrationErrorMessages.push(data);
   }
   
 };
