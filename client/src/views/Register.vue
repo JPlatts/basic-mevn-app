@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <registration-confirmation />
+    <div v-if="authUser" class="row justify-content-md-center">
+    <div class="col-md-6">
+      <h1>Thanks for registering, {{authUser.firstName}}!</h1>
+      <p>An account confirmation email has been sent to {{authUser.email}}</p>
+      <p>In order to complete the registration process, please follow the link in the email to confirm your account.</p>
+    </div>
+</div>
     <div class="row justify-content-md-center">
       <div v-if="!authUser" class="col-md-6">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
@@ -57,7 +63,6 @@
 
 import Terms from '../components/Terms';
 import PasswordHelp from '../components/PasswordHelp';
-import RegistrationConfirmation from '../components/RegistrationConfirmation';
 import cf from '../modules/common-functions'
 import {mapGetters, mapActions} from 'vuex';
 
@@ -65,8 +70,7 @@ export default {
   name: 'Register',
   components: {
     Terms,
-    PasswordHelp, 
-    RegistrationConfirmation
+    PasswordHelp
   },
   data() {
     return {

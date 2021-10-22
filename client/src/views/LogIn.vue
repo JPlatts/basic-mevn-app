@@ -15,6 +15,9 @@
         <button class="w-100 btn btn-lg btn-warning" type="button" @click="resetPwd">Forgot password? Reset.</button>
         <router-link class="btn btn-outline-success" to="/register" >Don't have an account? Sign Up!</router-link>
         <div v-for="(alert, i) in getAuthFailureMessages" :key="i" class="alert alert-danger">{{alert.msg}}</div>
+        <p v-if="isUnconfirmed" >
+          If you lost your confirmation email, you may run through the registration process again (24 hours after the last registration attempt).
+        </p>
       </div>
     </div>
   </div>
@@ -22,13 +25,15 @@
 
 <script>
 
+
 import cf from '../modules/common-functions';
 import {mapGetters, mapActions} from 'vuex';
+
 
 export default {
   name: 'LogIn',
   components: {
-    
+
   },
   data() {
     return {
@@ -47,6 +52,9 @@ export default {
     ...mapGetters(['authUser','getAuthFailureMessages', 'isAuthenticated']),
     credentials() { 
        return {email: this.email, password: this.password}
+    },
+    isUnconfirmed() {
+      return this.getAuthFailureMessages.some(m => m.statusCode === 201);
     },
   },
   methods: {

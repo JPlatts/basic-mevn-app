@@ -4,49 +4,52 @@ const mailer = require('../modules/mailer');
 
 
 const userSchema = mongoose.Schema({
-    email: { 
-        type: String,
-        required: true,
-        unique: true
-    }, 
-    firstName: {
-        type: String,
-        required: true
-    }, 
-    lastName: {
-        type: String,
-        required: true
-    }, 
-    pwdHash: {
-        type: String
-    },
-    pwdSalt: {
-        type: String
-    },
-    passwordSetDate: { 
-        type: Date
-    },
-    loginAttemptCount: {
-        type: Number,
-        default: 0
-    },
-    isLocked: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    confirmationHash: {
-        type: String
-    },
-    confirmationSalt: {
-        type: String
-    },
-    confirmationDate: {
-        type: Date
-    },
-    lastLoginDate: {
-        type: Date
-    },
+  email: { 
+    type: String,
+    required: true,
+    unique: true
+  }, 
+  firstName: {
+    type: String,
+    required: true
+  }, 
+  lastName: {
+    type: String,
+    required: true
+  }, 
+  pwdHash: {
+    type: String
+  },
+  pwdSalt: {
+    type: String
+  },
+  passwordSetDate: { 
+    type: Date
+  },
+  loginAttemptCount: {
+    type: Number,
+    default: 0
+  },
+  isLocked: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  confirmationHash: {
+    type: String
+  },
+  confirmationSalt: {
+    type: String
+  },
+  confirmationDate: {
+    type: Date
+  },
+  lastLoginDate: {
+    type: Date
+  },
+  creationDate: {
+    type: Date
+  }
     
 
 });
@@ -57,7 +60,7 @@ userSchema.virtual("fullName").get(function() {
 
 userSchema.statics.userExistsWithEmail = async (email) => {
     let user = await User.findOne({email: email});
-    if (user) {
+    if (user && (user.confirmationDate || user.creationDate.setHours(user.creationDate.getHours() + 24) >= new Date() )) {
         return true;
     } else {
         return false;
@@ -77,6 +80,12 @@ userSchema.statics.sanitizeNewUser = (user) => {
 userSchema.statics.createAndSave = async (inputUser) => {
   let user = userSchema.statics.sanitizeNewUser(inputUser);
   let pwHash = hasher.hashPwd(user.password);
+
+  let prexUser = await User.findOne({email: user.email});
+  if(prexUser) { //This can happen if a user doesn't confirm their account within 24 hours of creating it.
+    await User.deleteOne({email: user.email});
+  }
+  
   let newUser = new User();
   newUser.email = user.email;
   newUser.firstName = user.firstName;
@@ -84,6 +93,7 @@ userSchema.statics.createAndSave = async (inputUser) => {
   newUser.pwdHash = pwHash.hash;
   newUser.pwdSalt = pwHash.salt;
   newUser.passwordSetDate = new Date();
+  newUser.creationDate = new Date();
   
   let confKey = hasher.genResetkey();
   let confHash = hasher.hashPwd(confKey);

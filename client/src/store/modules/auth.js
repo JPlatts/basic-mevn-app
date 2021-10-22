@@ -91,9 +91,7 @@ const actions = {
       commit('registrationSuccess', data);
     }     
   },
-  // async requestConfirmation({commit}, user) {
-    
-  // }
+  
 };
 
 
