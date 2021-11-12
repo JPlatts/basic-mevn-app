@@ -91,6 +91,20 @@ const actions = {
       commit('registrationSuccess', data);
     }     
   },
+
+  async forgotPassword({commit}, credentials) {
+    let response = await fetch('/api/user/forgotpw', {
+      method: 'POST',
+      body: JSON.stringify({ email: credentials.email}),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    let data = await response.json();
+    if (response.status !== 200) {
+      commit('forgotPasswordFailure', {msg:data.msg, statusCode:response.status });
+    } else {
+      commit('forgotPasswordSuccess', data);
+    }     
+  }
   
 };
 
@@ -132,7 +146,13 @@ const mutations = {
   registrationFailure: (state, data) => {
     state.registrationErrorMessages = [];
     state.registrationErrorMessages.push(data);
+  },
+
+  forgotPasswordFailure: (state, data) => {
+    state.authFailureMessages = [];
+    state.authFailureMessages.push(data);
   }
+  
   
 };
 

@@ -4,6 +4,7 @@ import About from '../views/About'
 import Register from '../views/Register'
 import Confirm from '../views/Confirm'
 import LogIn from '../views/LogIn'
+import ForgotPassword from '../views/ForgotPassword'
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/login',
     name: 'LogIn',
     component: LogIn,
+  },
+  {
+    path: '/forgotpassword',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
   },
 ]
 
