@@ -31,19 +31,7 @@
           <label for="txtEmail">Email address</label>
           <div class="invalid-feedback">{{emailValidationText}}</div>
         </div>
-        <div class="form-floating">
-          <input v-model="password" type="password" class="form-control" 
-            :class="{'is-invalid': !passwordValid, 'is-valid': passwordValid}"
-            id="txtPwd" placeholder="Password">
-          <label for="txtPwd">Password</label>
-          <div class="invalid-feedback">{{passwordValidationText}} <password-help /></div>
-        </div>
-        <div class="form-floating">
-          <input v-model="confirmPassword" type="password" class="form-control" 
-            :class="{'is-invalid': !confirmationValid, 'is-valid': confirmationValid}"
-            id="txtConfirmPassword" placeholder="Confirm Password">
-          <label for="txtConfirmPassword">Confirm Password *</label>
-        </div>
+        <password-input v-model="passwordInput"  />
         <div class="checkbox mt-2 mb-3 form-control"
           :class="{'is-invalid': !acceptsConditions}">
           <input v-model="acceptsConditions" type="checkbox" id="chkTerms" />
@@ -62,7 +50,8 @@
 <script>
 
 import Terms from '../components/Terms';
-import PasswordHelp from '../components/PasswordHelp';
+import PasswordInput from '../components/PasswordInput';
+
 import cf from '../modules/common-functions'
 import {mapGetters, mapActions} from 'vuex';
 
@@ -70,15 +59,14 @@ export default {
   name: 'Register',
   components: {
     Terms,
-    PasswordHelp
+    PasswordInput
   },
   data() {
     return {
       firstName: 'Joe',
       lastName: 'Platts',
       email: 'japlatts@gmail.com',
-      password: '1Double2@',
-      confirmPassword: '1Double2@',
+      passwordInput: { password: '', isValid: false },
       acceptsConditions: true,
     }
   },
@@ -100,26 +88,6 @@ export default {
           return 'Email address is invalid.';
       }
     },
-    passwordValid() {
-      return (this.password.trim() !== '' && cf.isMedStrongPwd(this.password.trim()));
-    },
-    passwordValidationText() {
-      if (this.password.trim() == '') {
-          return 'Password is required.';
-      } else {
-          return 'Password is too weak.';
-      }
-    },
-    confirmationValid() {
-      return (this.confirmPassword.trim() !== '' && this.password.trim() === this.confirmPassword.trim());
-    },
-    confirmationValidationText() {
-      if (this.confirmPassword.trim() == '') {
-          return 'Password confirmation is required.';
-      } else {
-          return 'Password confirmation does not match.';
-      }
-    }
   },
   watch:{
     isAuthenticated(newVal) {
@@ -131,7 +99,7 @@ export default {
   methods: {
     ...mapActions(['register']),
     submitRegistration() {
-      if(this.firstNameValid && this.lastNameValid && this.emailValid && this.confirmationValid && this.acceptsConditions) {
+      if(this.firstNameValid && this.lastNameValid && this.emailValid && this.passwordInput.isValid && this.acceptsConditions) {
         this.register(this.$data);
       }
     }

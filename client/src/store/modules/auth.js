@@ -79,7 +79,7 @@ const actions = {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        password: user.password,
+        password: user.passwordInput.password,
         confirmationRoute: `${window.location.origin}/confirm`
       }),
       headers: { 'Content-Type': 'application/json' }
