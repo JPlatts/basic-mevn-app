@@ -10,9 +10,11 @@
           <button class="w-100 btn btn-lg btn-primary" type="button" @click="resetPW" :disabled="locked">Request password reset.</button>
         </div>
         <div v-if="successfulRequest" class="form-floating">
-          <input v-model="pwResetCode" type="password" class="form-control" id="txtResetCode">
+          <input v-model="pwResetCode" type="password" class="form-control" id="txtResetCode"
+            :class="{'is-invalid': !resetCodeValid, 'is-valid': resetCodeValid}"
+          >
           <label for="txtResetCode">Password reset verification code</label>
-          <password-input v-model:password="password" v-model:passwordValid="passwordValid" />
+          <password-input v-model="passwordInput"  />
           <button class="w-100 btn btn-lg btn-primary" type="button" @click="setPW" :disabled="locked">Set password.</button>  
         </div>        
         <div v-for="(alert, i) in alerts" :key="i" class="alert alert-danger">{{alert.msg}}</div>
@@ -39,9 +41,7 @@ export default {
       successfulRequest: false,
       locked: false,
       pwResetCode: '',
-      password: '',
-      passwordValid: false,
-      
+      passwordInput: { password: '', isValid: false }
     }
   },
   watch:{
@@ -53,6 +53,9 @@ export default {
   },
   computed: {
     ...mapGetters(['isAuthenticated']),
+    resetCodeValid() {
+      return (!!this.pwResetCode && this.pwResetCode.trim() != '');
+    }
     
   },
   methods: {
@@ -77,10 +80,22 @@ export default {
       this.locked = false;
     },
     async setPW() {
-      if(this.passwordValid) {
-        this.locked = true
-        console.log(this.password);
-        console.log(this.passwordValid);
+      if(this.passwordInput.isValid) {
+        this.locked = true;
+        this.alerts = [];
+        let response = await fetch('/api/users/resetpw', {
+          method: 'POST',
+          body: JSON.stringify({ email: this.email, resetCode: this.pwResetCode,  password: this.passwordInput.password }),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        let data = await response.json();
+        if (response.status !== 200) {
+          this.alerts.push({msg: data.msg});
+        } else {
+          this.$router.push('/login');
+        }
+        console.log(this.passwordInput.password);
+        console.log(this.passwordInput.isValid);
         this.locked = false;
       }
     }

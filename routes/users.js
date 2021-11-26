@@ -125,7 +125,7 @@ router.post('/resetpw', async (req, res) => {
     if(!user) {
       res.status(202).json({ msg:'Account not found.' });
     } else {
-      let s = await User.resetPassword(req.body.resetCode, req.body.password);
+      let s = await user.resetPassword(req.body.resetCode, req.body.password);
       if(s) {
         res.status(200).json({msg:'Success.' });
       } else {

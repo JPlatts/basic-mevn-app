@@ -65,8 +65,8 @@ userSchema.methods.hasPwResetRequest = function hasPwResetRequest() {
 }
 
 userSchema.methods.resetPassword = async function resetPassword(resetCode, newPassword) {
-  let pwReq = this.pwResetRequests.findOne(r => r.expirationDate > new Date() && r.resetCodeHash === hasher.hash(r.resetCodeSalt, resetCode));
-  if(pwReq && this.isMedStrongPassword(newPassword)) {
+  let pwReq = this.pwResetRequests.find(r => r.expirationDate > new Date() && r.resetCodeHash === hasher.hash(r.resetCodeSalt, resetCode));
+  if(pwReq && User.isMedStrongPassword(newPassword)) {
     try {
       let phash = hasher.hashPwd(newPassword);
       this.pwdSalt = phash.salt;
@@ -201,7 +201,7 @@ userSchema.statics.validateNewUser = (user) => {
     valid = false;
   }
   
-  if (!saniUser.password || !this.isMedStrongPassword(saniUser.password)) {
+  if (!saniUser.password || !User.isMedStrongPassword(saniUser.password)) {
     valid = false;
   }
 

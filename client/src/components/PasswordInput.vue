@@ -25,8 +25,8 @@ export default {
   components: {
     PasswordHelp
   },
-  props: ['password', 'passwordValid'],
-  emits: ['update:password', 'update:passwordValid'],
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
   data() {
     return {
       confirmPassword: '',
@@ -34,34 +34,39 @@ export default {
   },
   computed: {
     isValid() {
-      return (!!this.password && this.password.trim() !== '' && cf.isMedStrongPwd(this.password.trim()) && this.password.trim() === this.confirmPassword.trim());
+      return (
+        !!this.modelValue.password 
+        && this.modelValue.password.trim() !== '' 
+        && cf.isMedStrongPwd(this.modelValue.password.trim()) 
+        && this.modelValue.password.trim() === this.confirmPassword.trim()
+      );
     },
     passwordValue: {
       get() {
-        return this.password;
+        return this.modelValue.password;
       },
       set(v) {
-        this.$emit('update:password', v);
-        this.$emit('update:passwordValid', this.isValid);
+        this.$emit('update:modelValue', {password: v, isValid: this.isValid});
+        
       }
     },
     pwValid() {
-      return (!!this.password && this.password.trim() !== '' && cf.isMedStrongPwd(this.password.trim()));
+      return (!!this.modelValue.password && this.modelValue.password.trim() !== '' && cf.isMedStrongPwd(this.modelValue.password.trim()));
     },
     passwordValidationText() {
-      if (!this.password || this.password.trim() == '') {
+      if (!this.modelValue.password || this.modelValue.password.trim() == '') {
         return 'Password is required.';
       } else {
         return 'Password is too weak.';
        }
     },
     confirmationValid() {
-      return (this.confirmPassword.trim() !== '' && this.password.trim() === this.confirmPassword.trim());
+      return (this.confirmPassword.trim() !== '' && this.modelValue.password.trim() === this.confirmPassword.trim());
     }
   },
   watch: {
     confirmPassword() {
-      this.$emit('update:passwordValid', this.isValid);
+      this.$emit('update:modelValue', {password: this.modelValue.password, isValid: this.isValid});
     }
   },
 }
