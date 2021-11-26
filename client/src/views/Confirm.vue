@@ -41,6 +41,11 @@ export default {
       }
     }
   },
+  mounted() {
+    if(this.isAuthenticated) {
+      this.$router.push('/');
+    }
+  },
   async created() {
     this.confirmAccount({id: this.id, key: this.confkey})
   }

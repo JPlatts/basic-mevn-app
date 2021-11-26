@@ -30,10 +30,11 @@ import cf from '../modules/common-functions';
 import {mapGetters, mapActions} from 'vuex';
 
 
+
 export default {
   name: 'LogIn',
   components: {
-
+    
   },
   data() {
     return {
@@ -46,6 +47,11 @@ export default {
       if(newVal) {
         this.$router.push('/');
       }
+    }
+  },
+  mounted() {
+    if (this.isAuthenticated) {
+      this.$router.push('/');
     }
   },
   computed: {

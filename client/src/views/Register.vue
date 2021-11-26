@@ -96,6 +96,11 @@ export default {
       }
     }
   },
+  mounted() {
+    if(this.isAuthenticated) {
+      this.$router.push('/');
+    }
+  },
   methods: {
     ...mapActions(['register']),
     submitRegistration() {
