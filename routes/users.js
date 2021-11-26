@@ -3,6 +3,7 @@ const User = require('../models/user');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const {JWT_KEY} = require('../modules/config');
+const { restart } = require('nodemon');
 
 router.post('/register', async (req, res) => {
   try {
@@ -91,9 +92,50 @@ router.post('/reauthenticate', async (req, res) => {
       res.status(202).json({ msg:'Authentication Failed' });
     }
   } catch (err) {
+    console.log(err);
     res.status(400).json({ msg:'Invalid Request' });
   }
   
+});
+
+router.post('/forgotpw', async (req, res) => {
+  try {
+    let user = await User.findOne({email:req.body.email});
+    if(!user) {
+      res.status(202).json({ msg:'Account not found.' });
+    } else if(user && user.hasPwResetRequest()) {
+      res.status(203).json({msg:'An active password reset request already exists. Please try again later.' });
+    } else {
+      await User.requestPwReset(user);
+      res.status(200).json({msg:'Success.' });
+    }
+    
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg:'Invalid Request' });
+  }
+
+  
+  
+});
+
+router.post('/resetpw', async (req, res) => {
+  try {
+    let user = await User.findOne({email:req.body.email});
+    if(!user) {
+      res.status(202).json({ msg:'Account not found.' });
+    } else {
+      let s = await User.resetPassword(req.body.resetCode, req.body.password);
+      if(s) {
+        res.status(200).json({msg:'Success.' });
+      } else {
+        res.status(400).json({ msg:'Invalid Request' });    
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ msg:'Invalid Request' });
+  }
 });
 
 

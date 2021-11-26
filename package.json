@@ -12,18 +12,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ghetto_twin@bitbucket.org/ghetto_twin/basic-mevn-app.git"
+    "url": "git+https://github.com/JPlatts/basic-mevn-app.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://bitbucket.org/ghetto_twin/basic-mevn-app/issues"
+    "url": "https://github.com/JPlatts/basic-mevn-app/issues"
   },
-  "homepage": "https://bitbucket.org/ghetto_twin/basic-mevn-app#readme",
+  "homepage": "https://github.com/JPlatts/basic-mevn-app/#readme",
   "dependencies": {
     "axios": "^0.22.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "date-and-time": "^2.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

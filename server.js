@@ -17,7 +17,7 @@ app.use(express.json())
 //initialize mongo db
 const db = require('./modules/init-db');
 
-app.use('/api/bucketlistitems', require('./routes/bucketListItems'));
+
 app.use('/api/users', require('./routes/users'));
 
 if (process.env.NODE_ENV === 'production') {

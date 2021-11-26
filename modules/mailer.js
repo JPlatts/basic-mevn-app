@@ -24,6 +24,18 @@ function mailer() {
     let html = `<p>Thank you for registering with PlattsWork.com</p>
                 <p>Please follow this link to confirm your account registration:</p><p>
                 <a href="${link}">Confirm Account</a></p>`;
+    return await this.sendMail(user, subject, html);
+  }
+
+  this.pwResetMail = async (user, resetCode) => {
+    let subject = 'PlattsWork.com Password Reset';
+    let html = `<p>Please use this code to reset your password.</p>
+                <p>${resetCode}</p>`;
+    return await this.sendMail(user, subject, html);
+    
+  }
+
+  this.sendMail = async (user, subject, html) => {
     if (smtpSettings.useSendGrid) {
       let options = {
         method: 'POST',
@@ -42,7 +54,7 @@ function mailer() {
       try {
         let response = await axios.request(options);
         return !!response;
-      } catch(err){
+      } catch(err) {
         console.log(err)
         return false;
       }

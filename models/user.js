@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const hasher = require('../modules/hasher');
 const mailer = require('../modules/mailer');
-
+const PwResetRequest = require('../models/pwResetRequest');
+const dt = require('date-and-time');
 
 const userSchema = mongoose.Schema({
   email: { 
@@ -49,7 +50,8 @@ const userSchema = mongoose.Schema({
   },
   creationDate: {
     type: Date
-  }
+  },
+  pwResetRequests: [PwResetRequest.schema]
     
 
 });
@@ -57,6 +59,30 @@ const userSchema = mongoose.Schema({
 userSchema.virtual("fullName").get(function() {
     return `${this.firstName} ${this.lastName}`;
 });
+
+userSchema.methods.hasPwResetRequest = function hasPwResetRequest() {
+  return this.pwResetRequests && this.pwResetRequests.some(r => r.expirationDate > new Date())
+}
+
+userSchema.methods.resetPassword = async function resetPassword(resetCode, newPassword) {
+  let pwReq = this.pwResetRequests.findOne(r => r.expirationDate > new Date() && r.resetCodeHash === hasher.hash(r.resetCodeSalt, resetCode));
+  if(pwReq && this.isMedStrongPassword(newPassword)) {
+    try {
+      let phash = hasher.hashPwd(newPassword);
+      this.pwdSalt = phash.salt;
+      this.pwdHash = phash.hash;
+      this.pwResetRequests = [];
+      this.passwordSetDate = new Date();
+      await this.save();
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  } else {
+    return false;
+  }
+}
 
 userSchema.statics.userExistsWithEmail = async (email) => {
     let user = await User.findOne({email: email});
@@ -123,6 +149,7 @@ userSchema.statics.desensitize = async (user) => {
   delete retVal.confirmationSalt;
   delete retVal.pwdHash;
   delete retVal.pwdSalt;
+  delete retVal.pwResetRequests;
   return retVal;
 }
 
@@ -173,10 +200,8 @@ userSchema.statics.validateNewUser = (user) => {
   if (!saniUser.lastName || saniUser.lastName == '') {
     valid = false;
   }
-
-  let pwRegex = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
-
-  if (!saniUser.password || !pwRegex.test(saniUser.password)) {
+  
+  if (!saniUser.password || !this.isMedStrongPassword(saniUser.password)) {
     valid = false;
   }
 
@@ -186,6 +211,25 @@ userSchema.statics.validateNewUser = (user) => {
 
   return valid;
 
+}
+
+userSchema.statics.requestPwReset = async (user) => {
+  
+  let resetKey = hasher.genResetkey();
+  let keyCrypt = hasher.hashPwd(resetKey);
+  let pwReq = new PwResetRequest({
+    resetCodeSalt: keyCrypt.salt,
+    resetCodeHash: keyCrypt.hash,
+    expirationDate: dt.addHours(new Date(), 1)
+  });
+  user.pwResetRequests.push(pwReq)
+  await mailer.pwResetMail(user, resetKey);
+  await user.save();
+}
+
+userSchema.statics.isMedStrongPassword = (pwd) => {
+  let pwRegex = /(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  return pwRegex.test(pwd);
 }
 
 const User = mongoose.model('User', userSchema);
