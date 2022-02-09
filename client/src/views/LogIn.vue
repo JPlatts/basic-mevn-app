@@ -38,8 +38,8 @@ export default {
   },
   data() {
     return {
-      email: 'japlatts@gmail.com',
-      password: '1Double2@'
+      email: '',
+      password: ''
     }
   },
   watch:{

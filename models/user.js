@@ -223,8 +223,8 @@ userSchema.statics.requestPwReset = async (user) => {
     expirationDate: dt.addHours(new Date(), 1)
   });
   user.pwResetRequests.push(pwReq)
-  await mailer.pwResetMail(user, resetKey);
-  await user.save();
+    await mailer.pwResetMail(user, resetKey);
+    await user.save();
 }
 
 userSchema.statics.isMedStrongPassword = (pwd) => {

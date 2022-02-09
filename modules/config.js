@@ -8,9 +8,8 @@ module.exports = {
       port: process.env.SMTP_PORT || 2525,
       user: process.env.SMTP_USR || '[smtp_auth_usr]',
       password: process.env.SMTP_PWD || '[smtp_auth_pwd]',
-      sendGridHost: process.env.SENDGRID_HOST || null,
       sendGridKey: process.env.SENDGRID_KEY || null,
-      fromAddress: 'noReply@PlattsWork.com'
+      fromAddress: 'admin@plattswork.com'
     },
 
 }

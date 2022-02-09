@@ -1,7 +1,10 @@
 
 let nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 const { smtpSettings } = require('../modules/config');
-const axios = require('axios').default;
+
+
+//const axios = require('axios').default;
 
 function mailer() {
 
@@ -37,22 +40,15 @@ function mailer() {
 
   this.sendMail = async (user, subject, html) => {
     if (smtpSettings.useSendGrid) {
-      let options = {
-        method: 'POST',
-        url: `https://${smtpSettings.sendGridHost}/mail/send`,
-        headers: {
-          'content-type': 'application/json',
-          'x-rapidapi-host': smtpSettings.sendGridHost,
-          'x-rapidapi-key': smtpSettings.sendGridKey
-        },
-        data: {
-          personalizations: [{to: [{email: user.email}], subject: subject}],
-          from: {email: smtpSettings.fromAddress},
-          content: [{type: 'text/html', value: html}]
-        }
-      }
+      sgMail.setApiKey(smtpSettings.sendGridKey);
+      const msg = {
+        to: user.email, // Change to your recipient
+        from: smtpSettings.fromAddress, // Change to your verified sender
+        subject: subject,
+        html: html
+      };
       try {
-        let response = await axios.request(options);
+        let response = await sgMail.send(msg);
         return !!response;
       } catch(err) {
         console.log(err)
