@@ -1,7 +1,9 @@
 <template>
-  <footer>
-    <p>Copyright &copy; 2021</p>
-  </footer>
+  <footer class="footer mt-auto py-3 bg-dark">
+  <div class="container">
+    <span class="text-muted">Copyright &copy; 2021</span>
+  </div>
+</footer>
 </template>
 
 <style scoped>
@@ -9,7 +11,6 @@ a {
   color: #333;
 }
 footer {
-  margin-top: 30px;
   text-align: center;
 }
 </style>

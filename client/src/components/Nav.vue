@@ -1,23 +1,30 @@
 <template>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <router-link class="navbar-brand" to="/"><i class="fas fa-skull"></i> PlattsWork</router-link>
+    <router-link class="navbar-brand" to="/"><fai icon="skull" /> PlattsWork</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li v-if="isAuthenticated" class="nav-item">
+          <router-link class="nav-link" to="/decider"><fai icon="dice" /> Decider</router-link>
+        </li>
+
         <li class="nav-item">
           <router-link class="nav-link" to="/about">About</router-link>
         </li>
+
       </ul>
       <div class="d-flex">
-        <router-link v-if="!isAuthenticated" class="btn btn-outline-success" to="/login" >Log In</router-link>
-        <button v-if="isAuthenticated" type="button" class="btn btn-secondary" @click="logOut" >Log Out</button>
+        <router-link v-if="!isAuthenticated" class="btn btn-success" to="/login" ><fai icon="arrow-right-to-bracket" /> Log in.</router-link>
+        <button v-if="isAuthenticated" type="button" class="btn btn-secondary" @click="logOut" ><fai icon="arrow-right-from-bracket" /> Log out.</button>
       </div>
     </div>
   </div>
 </nav>
+</header>
 </template>
 <script>
 import { Modal } from 'bootstrap';

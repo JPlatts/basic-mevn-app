@@ -1,13 +1,19 @@
 <template>
-<div>
+<div class="d-flex flex-column h-100">
+  
   <Nav />
-  <router-view />
+  
+  <main class="flex-shrink-0">
+    <div class="container">
+      <router-view />
+    </div>
+  </main>
   <Footer />
 </div>
 </template>
 
 <script>
-import '@fortawesome/fontawesome-free/css/all.min.css'
+//import '@fortawesome/fontawesome-free/css/all.min.css'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
 import {mapGetters, mapActions} from 'vuex';
@@ -38,12 +44,16 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+} 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Courier New', monospace;;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  height: 100%;
+  
 }
 .form-control {
   margin-bottom: 5px;

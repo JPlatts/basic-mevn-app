@@ -9,7 +9,7 @@
 </div>
     <div class="row justify-content-md-center">
       <div v-if="!authUser" class="col-md-6">
-        <h1 class="h3 mb-3 fw-normal">Please register</h1>
+        <h1 class="h3 mb-3 fw-normal">Please register.</h1>
         <div class="form-floating">
           <input v-model="firstName" type="text" class="form-control"
             :class="{'is-invalid': !firstNameValid, 'is-valid': firstNameValid}"  
@@ -38,7 +38,7 @@
           <label for="chkTerms"> I accept the</label> <Terms /> 
         </div>
         
-        <button class="w-100 btn btn-lg btn-primary" type="button" @click="submitRegistration">Sign up</button>
+        <button class="w-100 btn btn-lg btn-primary" type="button" @click="submitRegistration"><fai icon="user-plus" /> Sign up!</button>
 
         <div v-for="(alert, i) in getRegistrationErrorMessages" :key="i" class="alert alert-danger">{{alert.msg}}</div>
 

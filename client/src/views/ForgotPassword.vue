@@ -5,16 +5,16 @@
         <h1 v-if="!successfulRequest" class="h3 mb-3 fw-normal">Forgot password?</h1>
         <h1 v-if="successfulRequest" class="h3 mb-3 fw-normal">A verification code has been sent to {{email}}</h1>
         <div v-if="!successfulRequest" class="form-floating">
-          <input v-model="email" type="email" class="form-control" id="txtEmail" placeholder="name@example.com">
+          <input v-model="email" type="email" class="form-control" id="txtEmail" placeholder="name@example.com" v-on:keyup.enter="resetPW">
           <label for="txtEmail">Email address</label>
-          <button class="w-100 btn btn-lg btn-primary" type="button" @click="resetPW" :disabled="locked">Request password reset.</button>
+          <button class="w-100 btn btn-lg btn-primary" type="button" @click="resetPW" :disabled="locked"><fai icon="envelope-open-text" /> Request password reset.</button>
         </div>
         <div v-if="successfulRequest" class="form-floating">
           <input v-model="pwResetCode" type="password" class="form-control" id="txtResetCode"
             :class="{'is-invalid': !resetCodeValid, 'is-valid': resetCodeValid}"
           >
           <label for="txtResetCode">Password reset verification code</label>
-          <password-input v-model="passwordInput"  />
+          <password-input v-model="passwordInput" v-on:keyup.enter="setPW"  />
           <button class="w-100 btn btn-lg btn-primary" type="button" @click="setPW" :disabled="locked">Set password.</button>  
         </div>        
         <div v-for="(alert, i) in alerts" :key="i" class="alert alert-danger">{{alert.msg}}</div>
