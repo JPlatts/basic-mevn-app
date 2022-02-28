@@ -25,6 +25,8 @@ import { faUserAstronaut } from "@fortawesome/free-solid-svg-icons";
 library.add(faUserAstronaut);
 import { faEnvelopeOpenText } from "@fortawesome/free-solid-svg-icons";
 library.add(faEnvelopeOpenText);
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+library.add(faTrashCan);
 
 
 const app = createApp(App).use(store);
