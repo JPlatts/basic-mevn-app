@@ -5,7 +5,7 @@ import Register from '../views/Register'
 import Confirm from '../views/Confirm'
 import LogIn from '../views/LogIn'
 import ForgotPassword from '../views/ForgotPassword'
-import Decider from '../views/Decider'
+import Deciders from '../views/Deciders'
 
 const routes = [
   {
@@ -41,8 +41,8 @@ const routes = [
   },
   {
     path: '/decider',
-    name: 'Decider',
-    component: Decider,
+    name: 'Deciders',
+    component: Deciders,
   },
 ]
 

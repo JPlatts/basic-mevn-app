@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Decider</h1>
+    <h1>{{name}}</h1>
     <ul class="list-group" >
       <decider-item :decider-item="di" :key="di.id" v-for="di in deciderItems" @delete-item="deleteItem" />
     </ul>
@@ -8,18 +8,19 @@
       <input class="form-control" type="text" v-model="newItemText" id="textNewItem" v-on:keyup.enter="addItem"/>
       <label for="txtNewItem"> (+) New item</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="button" @click="chooseOne" ><fai icon="dice" /> Make a decision.</button>
-    <button class="w-100 btn btn-lg btn-secondary" type="button" @click="clear" ><fai icon="trash-can" /> Clear list.</button>
+    <button class="w-100 btn btn-lg btn-primary" type="button" @click="chooseOne" ><fai icon="dice" /> Decide.</button>
+    <button class="w-100 btn btn-lg btn-secondary" type="button" @click="clear" ><fai icon="trash-can" /> Clear.</button>
   </div>
 </template>
 <script>
-import {mapGetters} from 'vuex';
+
 import DeciderItem from '../components/DeciderItem'
 export default {
   components: { DeciderItem },
   name: 'Decider',
   data() {
     return {
+      name: 'Decider 1',
       deciderItems: [
         { id: 1, text: 'Seahorse Inn', active: false},
         { id: 2, text: 'Fowl Moos', active: false},
@@ -31,7 +32,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
     maxIdentity() {
       var max = 0;
       this.deciderItems.forEach((item) => {
@@ -70,20 +70,6 @@ export default {
       this.deciderItems = []
     }
 
-  },
-  
-  watch:{
-    isAuthenticated(newVal) {
-      if(!newVal) {
-        this.$router.push('/');
-      }
-    }
-    
-  },
-  mounted() {
-    if(!this.isAuthenticated) {
-      this.$router.push('/');
-    }
   },
 
 };
