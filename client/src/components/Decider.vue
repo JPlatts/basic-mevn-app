@@ -1,15 +1,15 @@
 <template>
   <div>
-    <h1>{{name}}</h1>
+    <h1>{{decider.name}}:</h1>
     <ul class="list-group" >
-      <decider-item :decider-item="di" :key="di.id" v-for="di in deciderItems" @delete-item="deleteItem" />
+      <decider-item :decider-item="di" :key="di._id" v-for="di in decider.items" @delete-item="deleteItem" />
     </ul>
     <div class="form-floating">
-      <input class="form-control" type="text" v-model="newItemText" id="textNewItem" v-on:keyup.enter="addItem"/>
+      <input class="form-control" type="text" v-model="newItemText" id="textNewItem" v-on:keyup.enter="$emit('add-item', decider._id, newItemText)"/>
       <label for="txtNewItem"> (+) New item</label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="button" @click="chooseOne" ><fai icon="dice" /> Decide.</button>
-    <button class="w-100 btn btn-lg btn-secondary" type="button" @click="clear" ><fai icon="trash-can" /> Clear.</button>
+    <button class="w-100 btn btn-lg btn-primary" type="button" @click="$emit('choose-item', decider._id)" ><fai icon="dice" /> Decide.</button>
+    <button class="w-100 btn btn-lg btn-secondary" type="button" @click="$emit('clear-items', decider._id)" ><fai icon="trash-can" /> Clear.</button>
   </div>
 </template>
 <script>
@@ -20,16 +20,11 @@ export default {
   name: 'Decider',
   data() {
     return {
-      name: 'Decider 1',
-      deciderItems: [
-        { id: 1, text: 'Seahorse Inn', active: false},
-        { id: 2, text: 'Fowl Moos', active: false},
-        { id: 2, text: 'Full Horse', active: false}
-        
-      ],
-      newItemText: '',
-      deciding: false
+      newItemText: ''
     }
+  },
+  props: {
+    decider: Object
   },
   computed: {
     maxIdentity() {
@@ -43,34 +38,12 @@ export default {
     }
   },
   methods: {
-    addItem() {
-      console.log(this.deciderItems.length);
-      this.deciderItems.push({id: this.maxIdentity + 1, text: this.newItemText});
-      this.newItemText = '';
+    deleteItem(itemID) {
+      this.$emit('delete-item', this.decider._id, itemID);
     },
-    async chooseOne() {
-      if (!this.deciding) {
-        this.deciding = true;
-        this.deciderItems = this.deciderItems.map((d) => {
-          d.active = false;
-          return d
-        });
-        setTimeout(() => {
-          let i = Math.floor(Math.random() * this.deciderItems.length);
-          this.deciderItems[i].active = true;
-          this.deciding = false;
-        },500)
-      }
-    },
-    deleteItem(id) {
-      let i = this.deciderItems.findIndex((item)=>{return item.id === id});
-      this.deciderItems.splice(i, 1);
-    },
-    clear() {
-      this.deciderItems = []
-    }
+    
 
   },
-
+  emits: ['choose-item', 'clear-items', 'add-item', 'delete-item'],
 };
 </script>

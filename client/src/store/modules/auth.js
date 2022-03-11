@@ -3,7 +3,8 @@ const state = {
   user: null,
   jwt: '',
   authFailureMessages: [],
-  registrationErrorMessages: []
+  registrationErrorMessages: [],
+  authHeader: null
 };
 
 const getters = {
@@ -16,7 +17,9 @@ const getters = {
   
   getAuthFailureMessages: state => state.authFailureMessages,
 
-  getRegistrationErrorMessages: state => state.registrationErrorMessages
+  getRegistrationErrorMessages: state => state.registrationErrorMessages,
+
+  authHeader: state => state.authHeader
  
 };
 
@@ -105,18 +108,24 @@ const mutations = {
     state.jwt = data.token;
     localStorage.setItem('auth_token', data.token);
     state.authFailureMessage = [];
+    let ah = new Headers();
+    ah.append('Content-Type', 'application/json');
+    ah.append('Authorization', data.token);
+    state.authHeader = ah;
   },
   
   authenticationFailure: (state, data) => {
     state.user = data.user;
     state.jwt = '';
     localStorage.setItem('auth_token', '');
+    state.authHeader = null;
     state.authFailureMessages = [];
     state.authFailureMessages.push(data);
   },
   
   clearAthentication: (state) => {
-    state.user = null,
+    state.user = null;
+    state.authHeader = null;
     state.jwt = '';
     localStorage.setItem('auth_token', '');
     state.authFailureMessages = [];

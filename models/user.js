@@ -51,7 +51,9 @@ const userSchema = mongoose.Schema({
   creationDate: {
     type: Date
   },
-  pwResetRequests: [PwResetRequest.schema]
+  pwResetRequests: [PwResetRequest.schema],
+
+  deciders : [{ type: mongoose.Schema.Types.ObjectId, ref:'Decider' }]
     
 
 });

@@ -19,6 +19,9 @@ const db = require('./modules/init-db');
 
 
 app.use('/api/users', require('./routes/users'));
+app.use('/api/deciders', require('./modules/auth-middleware'));
+app.use('/api/deciders', require('./routes/deciders'));
+
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/dist'))
