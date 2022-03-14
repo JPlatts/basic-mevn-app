@@ -4,7 +4,7 @@ const deciderSchema = mongoose.Schema({
   name: { 
     type: String,
     required: true,
-    unique: true
+    unique: false
   }, 
   _user : { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   items: [{text: String}]

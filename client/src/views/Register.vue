@@ -63,11 +63,11 @@ export default {
   },
   data() {
     return {
-      firstName: 'Joe',
-      lastName: 'Platts',
-      email: 'japlatts@gmail.com',
+      firstName: '',
+      lastName: '',
+      email: '',
       passwordInput: { password: '', isValid: false },
-      acceptsConditions: true,
+      acceptsConditions: false,
     }
   },
   computed: {
