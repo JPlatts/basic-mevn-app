@@ -1,6 +1,0 @@
- - JWT token expiration
- - Decider item add
- - Decider item clear
- - Decider item rename
- - Decider item delete
- - Decider delete

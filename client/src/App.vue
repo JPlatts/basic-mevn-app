@@ -27,6 +27,7 @@ export default {
   methods: mapActions(['reAuthenticate', 'logOut']),
   computed: mapGetters(['isAuthenticated']),
   async created() {
+    console.log(window.location.origin);
     if(!this.isAuthenticated) {
       this.reAuthenticate();
     }
