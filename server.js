@@ -8,30 +8,51 @@ const app = express();
 const { PORT } = require('./modules/config');
 const cors = require('cors');
 const morgan = require('morgan');
+const history = require('connect-history-api-fallback');
+const { sslConfig } = require('./modules/config');
 
 app.use(cors())
 app.use(morgan('tiny'))
 app.use(express.json())
 
-
 //initialize mongo db
 const db = require('./modules/init-db');
-
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/deciders', require('./modules/auth-middleware'));
 app.use('/api/deciders', require('./routes/deciders'));
 
-
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
-    app.use(express.static('client/dist'))
-    app.get('*/*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
-    })
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+    app.use(history({ verbose:true }));
+    app.use(express.static('client/dist'));
 }
 
-app.listen(PORT, () => {
-   console.log(`Environment - ${process.env.NODE_ENV}`);
+if (sslConfig.useSSL) {
+  
+  
+  try {
+    const fs = require('fs');
+    const  https = require('https');
+    var privateKey  = fs.readFileSync(sslConfig.keyFile, 'utf8');
+    var certificate = fs.readFileSync(sslConfig.crtFile, 'utf8');  
+    var credentials = {key: privateKey, cert: certificate};
+    var httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(PORT, () => {
+      console.log(`Environment - ${process.env.NODE_ENV}`);
+      console.log(`basic-app listening for http requests on port ${PORT} at https://localhost:${PORT}`)
+    });
+
+  } catch (error) {
+    console.log('Error reading SSL certificate. Check config file for location settings.');
+    console.log(error);
+  }
+  
+
+} else {
+  app.listen(PORT, () => {
+    console.log(`Environment - ${process.env.NODE_ENV}`);
     console.log(`basic-app listening for http requests on port ${PORT} at http://localhost:${PORT}`)
-    
-});
+  });
+}
+
+
