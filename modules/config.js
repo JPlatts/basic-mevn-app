@@ -1,5 +1,5 @@
 module.exports = {
-    sslConfig: { useSSL: false, crtFile: 'sslcert/local.crt', keyFile: 'sslcert/local.key' },
+    sslConfig: { useSSL:process.env.USE_SSL && process.env.USE_SSL.toLowerCase() === 'true', crtFile: 'sslcert/local.crt', keyFile: 'sslcert/local.key' },
     mongoUri: process.env.MONGO_URI || 'mongodb://localhost/basic-mevn-app',
     PORT: process.env.PORT || 3000,
     JWT_KEY: process.env.JWT_KEY || 'Best_Be_Overridding_THIS_for__SECURITY__',
