@@ -11,7 +11,7 @@
       <div class="feature col">
         <fai icon="dice" class="feature-icon" />
         <h2>Decider</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <p>Having trouble making up your mind?!? Add your options to a list and let the Decider pick for you. Create as many decider lists as you want.  They'll be here when you come back.</p>
         <router-link v-if="isAuthenticated" to="/decider" class="btn btn-primary"><fai icon="dice" /> Decider</router-link>
         <fai v-if="!isAuthenticated" class="link-arrow" icon="chevron-right" />
         <router-link v-if="!isAuthenticated" to="/login" class="">Log in to access</router-link>

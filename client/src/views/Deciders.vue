@@ -11,15 +11,12 @@
           :ref="setDeciderRef" />
       </div>
     </div>
+    <hr />
     <div class="row">
-      <div class="col-sm-1">
-        <button class="btn btn-primary" @click="add">+</button>
-      </div>
-      <div class="col-sm-11">
-        <div class="form-floating" v-show="addMode">
-          <input class="form-control" type="text" v-model="newDeciderName" id="txtNewDeciderName" v-on:keyup.enter="addDecider" ref="newName" />
-          <label for="txtNewItem"> (+) New decider</label>
-        </div>
+      <div class="input-group form-floating">
+        <input type="text" class="form-control" v-model="newDeciderName" id="txtNewDeciderName" v-on:keyup.enter="addDecider" ref="newName">
+        <label for="txtNewDeciderName"> (+) new group name</label>
+        <button class="btn btn-outline-primary" type="button" @click="addDecider"><fai icon="plus-circle" /> Add group</button>
       </div>
     </div>
   </div>
@@ -33,7 +30,6 @@ export default {
   data() {
     return {
       deciders: [],
-      addMode: false,
       newDeciderName: '',
       deciderRefs: []
     }
@@ -68,12 +64,6 @@ export default {
     setDeciderRef(el) {
       this.deciderRefs.push(el);
     },
-    add() {
-      this.addMode = !this.addMode;
-      setTimeout(() => {
-        this.$refs.newName.focus();
-      }, 100);
-    }, 
     async chooseItem(deciderID) {
       let decider = this.deciders.find(d => d._id === deciderID);
       if(!decider.deciding) {
@@ -129,6 +119,9 @@ export default {
       this.deciders = data.deciders;
     },
     async addDecider() {
+      if(this.newDeciderName.trim() !== '') {
+
+      
       let response = await fetch('/api/deciders/add', { 
         method: 'POST',  
         body: JSON.stringify({name: this.newDeciderName }),
@@ -142,7 +135,9 @@ export default {
         }, 100);
       }
       this.newDeciderName = '';
-      this.addMode = false;
+      } else {
+        this.$refs.newName.focus();  
+      }
     },
 
   },

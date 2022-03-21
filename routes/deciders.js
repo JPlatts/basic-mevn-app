@@ -96,7 +96,6 @@ router.post('/add', async(req, res) => {
 router.post('/clear-items', async(req, res) => {
   try {
     let user = await req.user.populate('deciders');
-    console.log(req.body);
     let decider = user.deciders.find(d => d._id == req.body.deciderID);
     decider.items = [];
     await decider.save();

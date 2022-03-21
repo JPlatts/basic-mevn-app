@@ -27,6 +27,10 @@ import { faEnvelopeOpenText } from "@fortawesome/free-solid-svg-icons";
 library.add(faEnvelopeOpenText);
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 library.add(faTrashCan);
+import { faFrog } from "@fortawesome/free-solid-svg-icons";
+library.add(faFrog);
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+library.add(faCirclePlus);
 
 
 const app = createApp(App).use(store);

@@ -39,7 +39,7 @@ if (sslConfig.useSSL) {
     var httpsServer = https.createServer(credentials, app);
     httpsServer.listen(PORT, () => {
       console.log(`Environment - ${process.env.NODE_ENV}`);
-      console.log(`basic-app listening for http requests on port ${PORT} at https://localhost:${PORT}`)
+      console.log(`basic-app listening for https requests on port ${PORT} at https://localhost:${PORT}`)
     });
 
   } catch (error) {

@@ -85,4 +85,5 @@ export default {
   .container {
     margin-top: 40px;
   }
+  
 </style>

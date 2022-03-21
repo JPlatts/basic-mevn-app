@@ -45,18 +45,15 @@ export default {
 </script>
 
 <style>
-html, body {
-  height: 100%;
-} 
-#app {
-  font-family: 'Courier New', monospace;;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  height: 100%;
-  
-}
-.form-control {
-  margin-bottom: 5px;
-}
+  html, body {
+    height: 100%;
+  } 
+  #app {
+    font-family: 'Courier New', monospace;;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    height: 100%;
+    
+  }
 </style>

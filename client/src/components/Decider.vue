@@ -7,12 +7,14 @@
     <ul class="list-group" >
       <decider-item :decider-item="di" :key="di._id" v-for="di in decider.items" @delete-item="deleteItem" />
     </ul>
-    <div class="form-floating">
-      <input class="form-control" type="text" v-model="newItemText" id="textNewItem" v-on:keyup.enter="addItem" ref="newItemText" />
-      <label for="txtNewItem"> (+) Type in a new item and return to add</label>
+    <div class="input-group form-floating">
+      <input type="text" class="form-control" id="txtNewItem" v-model="newItemText" v-on:keyup.enter="addItem" ref="newItemText">
+      <label for="txtNewItem"> (+) new option</label>
+      <button class="btn btn-outline-primary" type="button" @click="addItem"><fai icon="plus-circle" /> Add</button>
     </div>
-    <button class="btn btn-primary" type="button" @click="$emit('choose-item', decider._id)" ><fai icon="dice" /> Decide</button>
-    <button class="btn btn-secondary" type="button" @click="$emit('clear-items', decider._id)" ><fai icon="trash-can" /> Clear</button>
+
+    <button class="btn btn-primary bottom" type="button" @click="$emit('choose-item', decider._id)" ><fai icon="dice" /> Decide</button>
+    <button class="btn btn-secondary bottom" type="button" @click="$emit('clear-items', decider._id)" ><fai icon="trash-can" /> Clear</button>
   </div>
 </div>
 </template>
@@ -32,14 +34,17 @@ export default {
   },
   methods: {
     addItem() {
-      this.$emit('add-item', this.decider._id, this.newItemText);
-      this.newItemText = '';
+      if(this.newItemText.trim() !== '') {
+        this.$emit('add-item', this.decider._id, this.newItemText);
+        this.newItemText = '';
+      } else {
+        this.$refs.newItemText.focus();  
+      }
     },
     deleteItem(itemID) {
       this.$emit('delete-item', this.decider._id, itemID);
     },
     focus() {
-      console.log(`Focusing ${this.decider.name}`);
       this.$refs.newItemText.focus();
     }
   },
@@ -50,11 +55,14 @@ export default {
   .over-button {
     color:blue;
   }
-  button { 
-    margin-top:5px;
+  button.bottom { 
+    margin-top:10px;
     margin-right:10px;
   }
   .card-header {
     font-weight: bolder;
+  }
+  .input-group {
+    margin-top:7px;
   }
 </style>

@@ -121,4 +121,7 @@ export default {
   button {
     margin-bottom:10px;
   }
+  .form-control {
+    margin-bottom: 5px;
+  }
 </style>
