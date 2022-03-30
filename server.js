@@ -1,4 +1,4 @@
-//load environment variables
+//load environment variables from .env file for environments other than production
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
@@ -10,6 +10,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const history = require('connect-history-api-fallback');
 const { sslConfig } = require('./modules/config');
+const { environment } = require('./modules/config');
+
 
 app.use(cors())
 app.use(morgan('tiny'))
@@ -22,7 +24,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/deciders', require('./modules/auth-middleware'));
 app.use('/api/deciders', require('./routes/deciders'));
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+if (environment === 'production' || environment === 'test') {
     app.use(history({ verbose:true }));
     app.use(express.static('client/dist'));
 }
@@ -38,7 +40,7 @@ if (sslConfig.useSSL) {
     var credentials = {key: privateKey, cert: certificate};
     var httpsServer = https.createServer(credentials, app);
     httpsServer.listen(PORT, () => {
-      console.log(`Environment - ${process.env.NODE_ENV}`);
+      console.log(`Environment - ${environment}`);
       console.log(`basic-app listening for https requests on port ${PORT} at https://localhost:${PORT}`)
     });
 
@@ -50,7 +52,7 @@ if (sslConfig.useSSL) {
 
 } else {
   app.listen(PORT, () => {
-    console.log(`Environment - ${process.env.NODE_ENV}`);
+    console.log(`Environment - ${environment}`);
     console.log(`basic-app listening for http requests on port ${PORT} at http://localhost:${PORT}`)
   });
 }

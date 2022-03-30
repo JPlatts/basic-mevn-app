@@ -94,8 +94,6 @@ export default {
         } else {
           this.$router.push('/login');
         }
-        console.log(this.passwordInput.password);
-        console.log(this.passwordInput.isValid);
         this.locked = false;
       }
     }

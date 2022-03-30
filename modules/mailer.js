@@ -3,9 +3,6 @@ let nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
 const { smtpSettings } = require('../modules/config');
 
-
-//const axios = require('axios').default;
-
 function mailer() {
 
   function initTransport () {
@@ -19,19 +16,17 @@ function mailer() {
     });
     return transport;
   }
-    
-  
 
   this.registrationMail = async (user, link) => {
-    let subject = 'PlattsWork.com Registration';
-    let html = `<p>Thank you for registering with PlattsWork.com</p>
+    let subject = `${smtpSettings.domain} Registration`;
+    let html = `<p>Thank you for registering with ${smtpSettings.domain}</p>
                 <p>Please follow this link to confirm your account registration:</p><p>
                 <a href="${link}">Confirm Account</a></p>`;
     return await this.sendMail(user, subject, html);
   }
 
   this.pwResetMail = async (user, resetCode) => {
-    let subject = 'PlattsWork.com Password Reset';
+    let subject = `${smtpSettings.domain} Password Reset`;
     let html = `<p>Please use this code to reset your password.</p>
                 <p>${resetCode}</p>`;
     return await this.sendMail(user, subject, html);

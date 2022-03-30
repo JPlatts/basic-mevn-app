@@ -1,4 +1,5 @@
 module.exports = {
+    environment: process.env.NODE_ENV || 'development',
     sslConfig: { useSSL:process.env.USE_SSL && process.env.USE_SSL.toLowerCase() === 'true', crtFile: 'sslcert/local.crt', keyFile: 'sslcert/local.key' },
     mongoUri: process.env.MONGO_URI || 'mongodb://localhost/basic-mevn-app',
     PORT: process.env.PORT || 3000,
@@ -10,7 +11,8 @@ module.exports = {
       user: process.env.SMTP_USR || '[smtp_auth_usr]',
       password: process.env.SMTP_PWD || '[smtp_auth_pwd]',
       sendGridKey: process.env.SENDGRID_KEY || null,
-      fromAddress: 'admin@plattswork.com'
+      domain: process.env.WEB_DOMAIN || 'domain.com',
+      fromAddress: `admin@${process.env.WEB_DOMAIN || 'domain.com'}`
     },
 
 }
