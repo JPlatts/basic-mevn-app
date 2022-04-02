@@ -3,7 +3,7 @@ A basic single page web application (SPA) with an API for jwt based authenticati
 
 This project is a great starter for building a web application with membership on the mevn stack.
 
-![vue-js](./client/src/assets/vue-js-seeklogo.com.svg)
+![MongoDB](./client/src//assets/MongoDB_Logo_RGB_Logo_Forest-Green.svg) ![vue-js](./client/src/assets/vue-js-seeklogo.com.svg) 
 
 
 
@@ -23,7 +23,7 @@ git clone https://github.com/JPlatts/basic-mevn-app.git
 ```
 cd basic-mevn-app
 ```
-3. Install
+3. Add Dependancies
 ```
 npm install
 cd client
