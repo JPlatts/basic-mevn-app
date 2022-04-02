@@ -5,7 +5,10 @@ This project is a great starter for building a web application with membership o
 
 ![MongoDB](./client/src//assets/MongoDB_Logo_RGB_Logo_Forest-Green.svg) ![vue-js](./client/src/assets/vue-js-seeklogo.com.svg) 
 
-
+<p align="center">
+  <img src="./client/src//assets/MongoDB_Logo_RGB_Logo_Forest-Green.svg" height="150" alt="MongoDB" title="MongoDB">
+  <img src="./client/src/assets/vue-js-seeklogo.com.svg" height="150" alt="Vue" title="Vue">
+</p>
 
 ## Prerequisites
 1.  git
