@@ -43,11 +43,11 @@ Option 1: Run client and server from a single terminal (concurrently)
 npm run dev
 ```
 Option 2: Run the client and server in separate terminals
-	Terminal One:
-	```
-	npm run server
-	```
-	Terminal Two:
-	```
-	npm run client
-	```
+Terminal One:
+```
+npm run server
+```
+Terminal Two:
+```
+npm run client
+```
