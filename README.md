@@ -14,7 +14,7 @@ This project is a great starter for building a web application with membership o
 
 
 ## Prerequisites
-1.  git
+1.  git - [git](https://git-scm.com)
 2.  npm
 3.  A MongoDB instance
 4.  SMTP server, or SendGrid API account
