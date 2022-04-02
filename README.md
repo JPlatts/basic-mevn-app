@@ -5,10 +5,10 @@ This project is a great starter for building a web application with membership o
 
 
 
-<p align="left" style="background-color:white;">
-  <img src="./client/src//assets/MongoDB_Logo_RGB_Logo_Forest-Green.svg" height="50" alt="MongoDB" title="MongoDB">
-  <img src="./client/src//assets/express-js-seeklogo.com.svg" height="50" alt="Express" title="Express">
-  <img src="./client/src/assets/vue-js-seeklogo.com.svg" height="50" alt="Vue" title="Vue">
+<p align="left">
+  <img src="./client/src//assets/MongoDB_Logo_RGB_Logo_Forest-Green.svg" height="50" alt="MongoDB" title="MongoDB">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./client/src//assets/express-js-seeklogo.com.svg" height="50" alt="Express" title="Express">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./client/src/assets/vue-js-seeklogo.com.svg" height="50" alt="Vue" title="Vue">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <img src="./client/src/assets/Node.js_logo.svg" height="50" alt="Vue" title="Vue">
 </p>
 
