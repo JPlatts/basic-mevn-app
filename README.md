@@ -28,9 +28,13 @@ git clone https://github.com/JPlatts/basic-mevn-app.git
 ```
 cd basic-mevn-app
 ```
-3. Add Dependancies
+3. Install server dependencies
 ```
-npm run install
+npm run install-server
+```
+3. Install client dependencies
+```
+npm run install-client
 ```
 
 ## Execution
