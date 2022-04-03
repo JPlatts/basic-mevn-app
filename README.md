@@ -12,9 +12,8 @@ This project is a great starter for building a web application with membership o
 
 ## Table of Contents  
 [Prerequisites](#Prerequisites)  
-
 [Installation](#Installation) 
-
+[Configuration](#Configuration) 
 [Debugging](#Debugging) 
 
 ## Prerequisites
@@ -41,6 +40,33 @@ npm run install-server
 3. Install client dependencies
 ```
 npm run install-client
+```
+
+## Configuration
+Configuration settings for this project are found in the modules/config.js file.
+
+It is recommended that the environment variables referenced in the file be set rather than explicitly defining settings here.  Environment variables will be read first, and used if available before the settings in the config value are applied (as shown below).
+
+Note:  Adding a '.env' file to the root of the project is an easy way to set environment values for a development environment.
+
+Configuration JSON example:
+```
+{
+  environment: process.env.NODE_ENV || 'development',
+  sslConfig: { useSSL:process.env.USE_SSL && process.env.USE_SSL.toLowerCase() === 'true', crtFile: 'sslcert/local.crt', keyFile: 'sslcert/local.key' },
+  mongoUri: process.env.MONGO_URI || 'mongodb://localhost/basic-mevn-app',
+  PORT: process.env.PORT || 3000,
+  JWT_KEY: process.env.JWT_KEY || 'Best_Be_Overridding_THIS_for__SECURITY__',
+  smtpSettings: {
+    useSendGrid: true,
+    server: process.env.SMTP_SERVER || 'smtp.server.com',
+    port: process.env.SMTP_PORT || 2525,
+    user: process.env.SMTP_USR || '[smtp_auth_usr]',
+    password: process.env.SMTP_PWD || '[smtp_auth_pwd]',
+    sendGridKey: process.env.SENDGRID_KEY || null,
+    domain: process.env.WEB_DOMAIN || 'domain.com',
+    fromAddress: `admin@${process.env.WEB_DOMAIN || 'domain.com'}`
+}
 ```
 
 ## Debugging
