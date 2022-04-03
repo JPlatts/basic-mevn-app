@@ -10,9 +10,11 @@ This project is a great starter for building a web application with membership o
   <img src="./client/src/assets/Node.js_logo.svg" height="50" alt="Vue" title="Vue">
 </p>
 
-### Table of Contents  
+## Table of Contents  
 [Prerequisites](#Prerequisites)  
+
 [Installation](#Installation) 
+
 [Execution/Debugging](#Execution) 
 
 ## Prerequisites
