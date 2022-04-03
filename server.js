@@ -44,6 +44,12 @@ if (sslConfig.useSSL) {
       console.log(`basic-app listening for https requests on port ${PORT} at https://localhost:${PORT}`)
     });
 
+    var http = require('http');
+    http.createServer(function (req, res) {
+        res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+        res.end();
+    }).listen(80);
+
   } catch (error) {
     console.log('Error reading SSL certificate. Check config file for location settings.');
     console.log(error);
