@@ -12,9 +12,9 @@ This project is a great starter for building a web application with membership o
 
 ## Table of Contents  
 [Prerequisites](#Prerequisites)  
-[Installation](#Installation) 
-[Configuration](#Configuration) 
-[Debugging](#Debugging) 
+[Installation](#Installation)  
+[Configuration](#Configuration)   
+[Debugging](#Debugging)  
 
 ## Prerequisites
 1.  git - [git-scm.com](https://git-scm.com)
