@@ -69,6 +69,15 @@ Configuration JSON example:
 }
 ```
 
+.env file example:
+```
+PORT=3080
+NODE_ENV=development
+JWT_KEY=YOUR_SeCReT_JWT_KEY
+SENDGRID_KEY=YOUR_SENDgrid_Key_If_You_use_sendGRID
+WEB_DOMAIN=YourEmailDomain.com
+```
+
 ## Debugging
 Option 1: Run client and server from a single terminal (concurrently)
 ```
