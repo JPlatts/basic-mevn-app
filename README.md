@@ -15,7 +15,7 @@ This project is a great starter for building a web application with membership o
 
 [Installation](#Installation) 
 
-[Execution/Debugging](#Execution) 
+[Debugging](#Debugging) 
 
 ## Prerequisites
 1.  git - [git-scm.com](https://git-scm.com)
@@ -43,7 +43,7 @@ npm run install-server
 npm run install-client
 ```
 
-## Execution/Debugging
+## Debugging
 Option 1: Run client and server from a single terminal (concurrently)
 ```
 npm run dev
