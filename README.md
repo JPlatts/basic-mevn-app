@@ -10,6 +10,10 @@ This project is a great starter for building a web application with membership o
   <img src="./client/src/assets/Node.js_logo.svg" height="50" alt="Vue" title="Vue">
 </p>
 
+##### Table of Contents  
+[Prerequisites](#Prerequisites)  
+[Installation](#Installation) 
+[Execution/Debugging](#Execution) 
 
 ## Prerequisites
 1.  git - [git-scm.com](https://git-scm.com)
@@ -17,7 +21,7 @@ This project is a great starter for building a web application with membership o
 3.  MongoDB instance - [www.mongodb.com](https://www.mongodb.com)
 4.  SMTP server, or a SendGrid API account - [sendgrid.com](https://sendgrid.com)
 
-Note:  [MailTrap.io](https://mailtrap.io) is a great substitute for a development SMPT server. Mailtrap is a fake/sandbox smpt service that works great for running and debugging this project without having so send real emails.
+Note:  [MailTrap.io](https://mailtrap.io) is a great substitute for a development SMPT server. Mailtrap is a sandbox smpt service that works great for running and debugging this project without having to send real emails.
 
 ## Installation
 1. Clone the repository
