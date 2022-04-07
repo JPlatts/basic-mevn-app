@@ -1,5 +1,10 @@
 <template>
   <div class="content">
+    <div class="row">
+      <div class="col">
+        <h2 class="pb-2 border-bottom"><fai icon="dice" /> Decider</h2>
+      </div>
+    </div>
     <div class="row" :key="decider._id" v-for="decider in deciders">
       <div class="col">
         <decider :decider="decider" 
