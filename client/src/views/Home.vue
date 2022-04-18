@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container px-4 py-5" id="featured-3">
-    <h2 class="pb-2 border-bottom">Home</h2>
+    <h2 class="pb-2 border-bottom"><fai icon="house-chimney" /> Home</h2>
     <div v-if="authUser" class="row">
       <div class="col">
         Welcome, {{authUser.firstName}} {{authUser.lastName}}!
@@ -17,18 +17,19 @@
         <router-link v-if="!isAuthenticated" to="/login" class="">Log in to access</router-link>
       </div>
       <div class="feature col">
-        <fai icon="skull" class="feature-icon" />
-        <h2>Featured title</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <fai icon="train" class="feature-icon" />
+        <h2>nexTrain</h2>
+        <p>Choose your favorite MTA subway stations to have instant access to upcoming departure times (updated in real time). Always available.  No more fumbling between apps and refreshing to see how long you're going to wait or if you should start running :-)</p>
         <fai class="link-arrow" icon="chevron-right" />
-        <a href="#" class="icon-link">Call to action</a>
+        <a href="#" class="icon-link">Coming soon!</a>
       </div>
       <div class="feature col">
-        <fai icon="skull" class="feature-icon" />
-        <h2>Featured title</h2>
-        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <fai icon="circle-info" class="feature-icon" />
+        <h2>About me</h2>
+        <p>Hi! I'm Joe Platts, the author of this website.  I've been developing for 15 plus years (mostly on the Microsoft stack).  This appliction was created as I am learning how to build in the MEVN stack. </p>
+        <p>It is super nice to be able to build everthing with JavaScript! See the about page for a link to my GitHub for this project.</p>
         <fai class="link-arrow" icon="chevron-right" />
-        <a href="#" class="icon-link">Call to action</a>
+        <router-link class="icon-link" to="/about">About</router-link>
       </div>
     </div>
   </div>

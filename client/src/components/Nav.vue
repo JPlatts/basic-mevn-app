@@ -2,7 +2,7 @@
 <header>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <router-link class="navbar-brand" to="/"><fai icon="frog" /> Basic MEVN App</router-link>
+    <router-link class="navbar-brand" to="/"><fai icon="house-chimney" /> PlattsWork</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,7 +13,7 @@
         </li>
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/about">About</router-link>
+          <router-link class="nav-link" to="/about"><fai icon="circle-info" /> About</router-link>
         </li>
 
       </ul>

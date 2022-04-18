@@ -31,8 +31,12 @@ import { faFrog } from "@fortawesome/free-solid-svg-icons";
 library.add(faFrog);
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faCirclePlus);
-
-
+import { faTrain } from "@fortawesome/free-solid-svg-icons";
+library.add(faTrain);
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+library.add(faCircleInfo);
+import { faHouseChimney } from "@fortawesome/free-solid-svg-icons";
+library.add(faHouseChimney);
 const app = createApp(App).use(store);
 app.component('fai', FontAwesomeIcon);
 app.use(router);
