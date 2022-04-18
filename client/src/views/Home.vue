@@ -26,7 +26,7 @@
       <div class="feature col">
         <fai icon="circle-info" class="feature-icon" />
         <h2>About me</h2>
-        <p>Hi! I'm Joe Platts, the author of this website.  I've been developing for 15 plus years (mostly on the Microsoft stack).  This appliction was created as I am learning how to build in the MEVN stack. </p>
+        <p>Hi! I'm Joe Platts (author). I've been developing for 15 plus years (mostly on the Microsoft stack).  This application was created as I am learning how to build in the MEVN stack. </p>
         <p>It is super nice to be able to build everthing with JavaScript! See the about page for a link to my GitHub for this project.</p>
         <fai class="link-arrow" icon="chevron-right" />
         <router-link class="icon-link" to="/about">About</router-link>
