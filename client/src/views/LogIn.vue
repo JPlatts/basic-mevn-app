@@ -12,12 +12,7 @@
           <label for="txtPwd">Password</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="button" @click="authenticate"><fai icon="arrow-right-to-bracket" /> Log in.</button>
-        <router-link class="w-100 btn btn-lg btn-outline-warning" to="/forgotpassword" ><fai icon="envelope-open-text" /> Forgot password?</router-link>
-        <router-link class="w-100 btn btn-outline-success" to="/register" ><fai icon="user-plus" /> Don't have an account? Sign Up!</router-link>
         <div v-for="(alert, i) in getAuthFailureMessages" :key="i" class="alert alert-danger">{{alert.msg}}</div>
-        <p v-if="isUnconfirmed" >
-          If you lost your confirmation email, you may run through the registration process again (24 hours after the last registration attempt).
-        </p>
       </div>
     </div>
   </div>

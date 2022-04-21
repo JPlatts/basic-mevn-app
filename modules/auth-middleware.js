@@ -1,4 +1,3 @@
-const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const {JWT_KEY} = require('../modules/config');
 
@@ -6,7 +5,10 @@ async function auth(req, res, next) {
   try
   {
     let unpacked = jwt.verify(req.headers.authorization, JWT_KEY);
-    let user = await User.findById(unpacked.user._id);
+    let user = null;
+    if(unpacked && unpacked.user && unpacked.user._id === 1) {
+      user = unpacked.user;
+    }
     if (!!user) {
       req.user = user;
       next();

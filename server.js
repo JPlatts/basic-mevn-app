@@ -18,11 +18,11 @@ app.use(morgan('tiny'))
 app.use(express.json())
 
 //initialize mongo db
-const db = require('./modules/init-db');
+//const db = require('./modules/init-db');
 
 app.use('/api/users', require('./routes/users'));
-app.use('/api/deciders', require('./modules/auth-middleware'));
-app.use('/api/deciders', require('./routes/deciders'));
+app.use('/api/deidentifier', require('./modules/auth-middleware'));
+app.use('/api/deidentifier', require('./routes/deidentifier'));
 
 if (environment === 'production' || environment === 'test') {
     app.use(history({ verbose:true }));

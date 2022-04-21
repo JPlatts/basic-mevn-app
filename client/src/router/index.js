@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home'
 import About from '../views/About'
-import Register from '../views/Register'
-import Confirm from '../views/Confirm'
+import DeIdentifier from '../views/DeIdentifier'
 import LogIn from '../views/LogIn'
-import ForgotPassword from '../views/ForgotPassword'
-import Deciders from '../views/Deciders'
+
 
 const routes = [
   {
@@ -19,30 +17,15 @@ const routes = [
     component: About,
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: Register,
+    path: '/deidentifier',
+    name: 'DeIdentifier',
+    component: DeIdentifier,
   },
-  {
-    path: '/confirm/:id/key/:confkey?',
-    name: 'Confirm',
-    component: Confirm,
-    props: true
-  },
+  
   {
     path: '/login',
     name: 'LogIn',
     component: LogIn,
-  },
-  {
-    path: '/forgotpassword',
-    name: 'ForgotPassword',
-    component: ForgotPassword,
-  },
-  {
-    path: '/decider',
-    name: 'Deciders',
-    component: Deciders,
   },
 ]
 
