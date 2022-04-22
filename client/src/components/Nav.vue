@@ -9,7 +9,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li v-if="isAuthenticated" class="nav-item">
-          <router-link class="nav-link" to="/deidentifier"><fai icon="user-astronaut" /> De-Identifier</router-link>
+          <router-link class="nav-link" to="/deidentifier"><fai icon="user-secret" /> De-Identifier</router-link>
         </li>
 
         <li class="nav-item">
