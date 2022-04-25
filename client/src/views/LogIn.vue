@@ -2,7 +2,8 @@
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-6">
-        <h1 class="h3 mb-3 fw-normal">Welcome!</h1>
+        <h1 class="h3 mb-3 fw-normal justify-content-md-center" style="">
+        <img src='@/assets/lowgo.png' /></h1>
         <div class="form-floating">
           <input v-model="email" type="email" class="form-control" id="txtEmail" placeholder="name@example.com">
           <label for="txtEmail">Email address</label>
