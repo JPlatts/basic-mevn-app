@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const {JWT_KEY,FIRST,LAST,USERNAME,PASSWORD} = require('../modules/config');
+const {JWT_KEY,USER,PASSWORD} = require('../modules/config');
 
 router.post('/authenticate', async (req, res) => {
   try {
     
-    let user = {
-      _id: 1,
-      email: USERNAME, 
-      firstName: FIRST, 
-      lastName: LAST
-    }
+    let user = USER
     console.log(req.body);
     if(req.body.email == user.email && req.body.password == PASSWORD) {
       const accessToken = jwt.sign({ user: user, created: new Date()}, JWT_KEY);
@@ -31,12 +26,7 @@ router.post('/reauthenticate', async (req, res) => {
     let unpacked = jwt.verify(req.body.token, JWT_KEY);
     let user = null;
     if (unpacked.user._id = 1) {
-      user = {
-        _id: 1,
-        email: USERNAME, 
-        firstName: FIRST, 
-        lastName: LAST
-      }
+      user = USER
     }
     if(!user) {
       console.log('reauth user not found')

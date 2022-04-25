@@ -39,6 +39,9 @@ import { faHouseChimney } from "@fortawesome/free-solid-svg-icons";
 library.add(faHouseChimney);
 import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
 library.add(faUserSecret);
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+library.add(faGear);
+
 const app = createApp(App).use(store);
 app.component('fai', FontAwesomeIcon);
 app.use(router);

@@ -11,11 +11,11 @@ router.get('/', async (req, res) => {
       output += data;
       console.log("Powershell Data: " + data);
     });
-    child.stderr.on("data",(data) => {
+    child.stderr.on("data", (data) => {
       console.log("Powershell Errors: " + data);
       res.status(202).json({ msg:'Failure', response: `There was a problem: ${data}`});
     });
-    child.on("exit",function(data){
+    child.on("exit", () => {
       console.log("Powershell Script finished");
       res.status(200).json({ msg:'Success', response: `The file as been de-identified (${output}).` });
     });
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     
   } catch (err) {
     console.log(err);
-    res.status(400).json({ msg:'Invalid Request' });
+    res.status(400).json({ msg:'Invalid Request', response: err});
   }
 });
 

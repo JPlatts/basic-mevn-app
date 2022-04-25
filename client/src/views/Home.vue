@@ -9,10 +9,10 @@
     </div>
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
       <div class="feature col">
-        <fai icon="user-secret" class="feature-icon" />
+        <fai icon="gear" class="feature-icon" />
         <h2>De-Identifier</h2>
         <p>Please log in to access the de-identification service.</p>
-        <router-link v-if="isAuthenticated" to="/deidentifier" class="btn btn-primary"><fai icon="user-secret" /> De-Indentifier</router-link>
+        <router-link v-if="isAuthenticated" to="/deidentifier" class="btn btn-primary"><fai icon="gear" /> De-Indentifier</router-link>
         <fai v-if="!isAuthenticated" class="link-arrow" icon="chevron-right" />
         <router-link v-if="!isAuthenticated" to="/login" class="">Log in to access</router-link>
       </div>
